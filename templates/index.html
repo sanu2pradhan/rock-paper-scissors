@@ -1,39 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rock Paper Scissors Game</title>
-    <link rel="stylesheet" href="static/style.css" />
-  </head>
-  <body>
-    <h1>Rock Paper Scissors</h1>
-    <div class="choices">
-      <div class="choice" id="rock">
-        <img src="static/images/rock.png" />
-      </div>
-      <div class="choice" id="paper">
-        <img src="static/images/paper.png" />
-      </div>
-      <div class="choice" id="scissors">
-        <img src="static/images/scissors.png" />
-      </div>
-    </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock-Paper-Scissors</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Rock-Paper-Scissors</h1>
 
-    <div class="score-board">
-      <div class="score">
-        <p id="user-score">0</p>
-        <p>You</p>
-      </div>
-      <div class="score">
-        <p id="comp-score">0</p>
-        <p>Comp</p>
-      </div>
-    </div>
+        <!-- User Input for Name -->
+        <div class="user-input">
+            <label for="username">Enter Your Name:</label>
+            <input type="text" id="username" placeholder="Your Name">
+            <button onclick="registerUser()">Start Game</button>
+        </div>
 
-    <div class="msg-container">
-      <p id="msg">Play your move</p>
+        <!-- Game Section -->
+        <div class="game-container" style="display: none;">
+            <h2 id="welcome"></h2>
+            <p>Select Rock, Paper, or Scissors</p>
+
+            <div class="button-group">
+                <button onclick="playGame('rock')">
+                    <img src="{{ url_for('static', filename='images/rock.png') }}" alt="Rock">
+                </button>
+                <button onclick="playGame('paper')">
+                    <img src="{{ url_for('static', filename='images/paper.png') }}" alt="Paper">
+                </button>
+                <button onclick="playGame('scissors')">
+                    <img src="{{ url_for('static', filename='images/scissors.png') }}" alt="Scissors">
+                </button>
+            </div>
+
+            <h3 id="result"></h3>
+            <h3>Score: <span id="score">0</span></h3>
+        </div>
+
+        <!-- Leaderboard -->
+        <div class="leaderboard">
+            <h2>Leaderboard</h2>
+            <ul id="leaderboard-list"></ul>
+        </div>
     </div>
-    <script src="static/app.js"></script>
-  </body>
+    
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
 </html>

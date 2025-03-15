@@ -1,66 +1,117 @@
-*{
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     margin: 0;
-    padding: 0;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     text-align: center;
+    width: 90%;
+    max-width: 500px;
 }
 
-h1 {
-    background-color: #081b31;
+/* User Input Section */
+.user-input input {
+    padding: 12px;
+    width: 70%;
+    border: none;
+    border-radius: 6px;
+    margin: 10px;
+    font-size: 16px;
+}
+
+.user-input button {
+    padding: 12px 20px;
+    background-color: #ff9800;
     color: white;
-    height: 5rem;
-    line-height: 5rem;
-}
-
-.choice {
-    height: 165px;
-    width: 165px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-}
-img{
-    height: 150px;
-    width: 150px;
-    object-fit: cover;
-    border-radius: 50%;
-}
-.choices {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 3rem;
-    margin-top: 3rem;
-}
-
-.choice:hover {
-    background-color: #081b31;
+    border: none;
+    border-radius: 6px;
     cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
 }
-.score-board {
+
+.user-input button:hover {
+    background-color: #e68900;
+}
+
+/* Game Section */
+.game-container {
+    margin-top: 20px;
+}
+
+.button-group {
     display: flex;
     justify-content: center;
+    gap: 15px;
+}
+
+.button-group button {
+    background-color: white;
+    border: none;
+    border-radius: 50%;
+    width: 130px;
+    height: 130px;
+    display: flex;
     align-items: center;
-    font-size: 2rem;
-    margin-top: 3rem;
-    gap: 5rem;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    padding: 10px;
 }
 
-#user-score, #comp-score {
-   font-size: 4rem; 
-
+.button-group button img {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    transition: transform 0.2s;
 }
 
-#msg {
-    background-color: #081b31;
-    color: white;
-    font-size: 2rem;
-    display: inline;
-    padding: 1rem;
-    border-radius: 1rem;
+.button-group button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
-.msg-container {
-    margin-top: 5rem;
-    
+
+.button-group button:hover img {
+    transform: scale(1.2);
+}
+
+/* Score & Result */
+h3 {
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+/* Leaderboard */
+.leaderboard {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+.leaderboard ul {
+    list-style: none;
+    padding: 0;
+}
+
+.leaderboard li {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 6px;
+    text-align: center;
 }

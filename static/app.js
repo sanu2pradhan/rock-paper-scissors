@@ -1,64 +1,62 @@
-let userScore = 0;
-let compScore = 0;
+let username = "";
 
-const choices = document.querySelectorAll(".choice");
-const msg = document.querySelector("#msg");
-
-const userScorePara = document.querySelector("#user-score");
-const compScorePara = document.querySelector("#comp-score");
-
-const genComputerChoice = () =>{
-    // rock, paper, scissors
-    const options = ["rock",  "paper", "scissors"];
-    const randonIdx = Math.floor(Math.random()*3);
-    return options[randonIdx]
-}; 
-
-const showWinner = (userWin, userChoice, compChoice) => {
-    if(userWin) {
-        userScore++;
-        userScorePara.innerText = userScore;
-        msg.innerText = `You win! ${userChoice} beats ${compChoice}`;
-        msg.style.backgroundColor = "green";
-    } else {
-        compScore++;
-        compScorePara.innerText = compScore;
-        msg.innerText = `You lose. ${compChoice} beats ${userChoice}`;
-        msg.style.backgroundColor = "red";
+function registerUser() {
+    username = document.getElementById("username").value;
+    if (!username) {
+        alert("Please enter your name");
+        return;
     }
-} 
-
-const drawGame = () => {
-    msg.innerText = "game was drawn. Play again";
-    msg.style.backgroundColor = "#081b31";
+    fetch('/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: username })
+    }).then(() => {
+        document.querySelector(".user-input").style.display = "none";
+        document.querySelector(".game-container").style.display = "block";
+        document.getElementById("welcome").innerText = `Welcome, ${username}!`;
+        loadLeaderboard();
+    });
 }
 
-const playGame = (userChoice) => {
-    // Generate computer choice
-    const compChoice = genComputerChoice();
+function playGame(playerChoice) {
+    const choices = ["rock", "paper", "scissors"];
+    const computerChoice = choices[Math.floor(Math.random() * 3)];
+    let result = "";
 
-    if (userChoice === compChoice) {
-        drawGame();    
+    if (playerChoice === computerChoice) {
+        result = "It's a tie!";
+    } else if (
+        (playerChoice === "rock" && computerChoice === "scissors") ||
+        (playerChoice === "paper" && computerChoice === "rock") ||
+        (playerChoice === "scissors" && computerChoice === "paper")
+    ) {
+        result = "You win!";
+        updateScore(1);
     } else {
-        let userWin = true;
-        if(userChoice === "rock"){
-            //scissors, paper
-            userWin = compChoice === "paper" ? false : true
-        } else if  (userChoice === "paper") {
-            userWin = compChoice === "scissors" ? false: true;
-        } else {
-            userWin = compChoice === "rock" ? false : true;
-        }
-        showWinner(userWin, userChoice, compChoice);
+        result = "You lose!";
+    }
 
-        }
+    document.getElementById("result").innerText = `You chose ${playerChoice}, computer chose ${computerChoice}. ${result}`;
+}
 
-} ;
-
-choices.forEach((choice) =>{
-
-    choice.addEventListener("click", () =>{
-        const userChoice = choice.getAttribute("id");
-        playGame(userChoice);
+function updateScore(points) {
+    fetch('/update_score', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: username, score: points })
+    }).then(() => {
+        loadLeaderboard();
     });
-});
+}
+
+function loadLeaderboard() {
+    fetch('/leaderboard')
+        .then(response => response.json())
+        .then(data => {
+            let leaderboard = document.getElementById("leaderboard-list");
+            leaderboard.innerHTML = "";
+            data.forEach(entry => {
+                leaderboard.innerHTML += `<li>${entry[0]} - ${entry[1]} points</li>`;
+            });
+        });
+}
